@@ -1,11 +1,10 @@
-package org.example.myrkeeper.сonfiguration;
+package by.tms.myRkeeper.сonfiguration;
 
-import org.example.myrkeeper.security.CustomUserDetailsService;
+import by.tms.myRkeeper.security.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,13 +24,15 @@ public class SecurityConfig {
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
+                                .requestMatchers("/register", "/login", "/css/**", "/images/**", "/js/**", "/static/**").permitAll()
+                                .requestMatchers("/choose", "/menu/**").authenticated()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/waiter/**").hasAnyRole("WAITER", "ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->
                         formLogin
                                 .loginPage("/login")
+                                .defaultSuccessUrl("/choose")
                                 .permitAll()
                 )
                 .logout(logout ->
@@ -42,6 +43,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

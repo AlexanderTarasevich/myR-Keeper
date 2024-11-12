@@ -1,0 +1,147 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: url('/images/r_keeper_green.png') no-repeat;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+form {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 3em;
+    height: 320px;
+    border-radius: 20px;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 20px 20px 20px -6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+}
+
+form p {
+    font-weight: 900;
+    color: #fff;
+    opacity: 0.7;
+    font-size: 2rem;
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+form a {
+    text-decoration: none;
+    font-size: 12px;
+    color: #ddd;
+}
+
+form a:hover {
+    text-shadow: 2px 2px 6px #00000040;
+}
+
+form a:active {
+    text-shadow: none;
+}
+
+form input {
+    background: transparent;
+    width: 200px;
+    padding: 1em;
+    margin-bottom: 2em;
+    border: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    box-shadow: 4px 4px 60px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+form input:hover {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.2);
+}
+
+form input[type="email"]:focus,
+form input[type="password"]:focus {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.2);
+}
+
+form input[type="button"],
+form input[type="submit"] {
+    margin-top: 50px;
+    width: 150px;
+    font-size: 1rem;
+}
+
+form input[type="button"]:hover,
+form input[type="submit"]:hover {
+    cursor: pointer;
+}
+
+.drops {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.drop {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    animation: fall 10s infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+.drop-1 {
+    width: 10px;
+    height: 10px;
+    left: 10%;
+    animation-delay: 1s;
+}
+
+.drop-2 {
+    width: 20px;
+    height: 20px;
+    left: 20%;
+    animation-delay: 2s;
+}
+
+.drop-3 {
+    width: 15px;
+    height: 15px;
+    left: 30%;
+    animation-delay: 3s;
+}
+
+.drop-4 {
+    width: 25px;
+    height: 25px;
+    left: 40%;
+    animation-delay: 4s;
+}
+
+.drop-5 {
+    width: 30px;
+    height: 30px;
+    left: 50%;
+    animation-delay: 5s;
+}

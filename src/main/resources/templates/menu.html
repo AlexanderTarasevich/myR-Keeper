@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title th:text="'Menu - ' + ${menuType}">Menu</title>
 </head>
 <body>
-$END$
+<h1 th:text="'Menu: ' + ${menuType}">Menu</h1>
+<ul>
+    <li th:each="item : ${menuItems}">
+        <span th:text="${item.name}">Item Name</span> - <span th:text="${item.price}">Item Price</span>
+    </li>
+</ul>
 </body>
 </html>

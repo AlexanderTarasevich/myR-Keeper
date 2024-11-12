@@ -1,6 +1,6 @@
-package org.example.myrkeeper.repository;
+package by.tms.myRkeeper.repository;
 
-import org.example.myrkeeper.entity.Role;
+import by.tms.myRkeeper.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

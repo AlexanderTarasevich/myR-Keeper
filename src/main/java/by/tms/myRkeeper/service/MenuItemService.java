@@ -1,7 +1,7 @@
-package org.example.myrkeeper.service;
+package by.tms.myRkeeper.service;
 
-import org.example.myrkeeper.entity.MenuItem;
-import org.example.myrkeeper.repository.MenuItemRepository;
+import by.tms.myRkeeper.entity.MenuItem;
+import by.tms.myRkeeper.repository.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

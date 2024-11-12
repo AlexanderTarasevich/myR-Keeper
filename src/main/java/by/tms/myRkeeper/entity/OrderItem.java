@@ -1,4 +1,4 @@
-package org.example.myrkeeper.entity;
+package by.tms.myRkeeper.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,6 +9,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
+@Table(name = "order_items")
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

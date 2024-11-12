@@ -1,12 +1,12 @@
-package org.example.myrkeeper.service;
+package by.tms.myRkeeper.service;
 
-import org.example.myrkeeper.entity.MenuItem;
-import org.example.myrkeeper.entity.Order;
-import org.example.myrkeeper.entity.OrderItem;
-import org.example.myrkeeper.entity.User;
-import org.example.myrkeeper.repository.MenuItemRepository;
-import org.example.myrkeeper.repository.OrderItemRepository;
-import org.example.myrkeeper.repository.OrderRepository;
+import by.tms.myRkeeper.entity.User;
+import by.tms.myRkeeper.entity.MenuItem;
+import by.tms.myRkeeper.entity.Order;
+import by.tms.myRkeeper.entity.OrderItem;
+import by.tms.myRkeeper.repository.MenuItemRepository;
+import by.tms.myRkeeper.repository.OrderItemRepository;
+import by.tms.myRkeeper.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

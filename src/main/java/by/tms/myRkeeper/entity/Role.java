@@ -1,9 +1,6 @@
-package org.example.myrkeeper.entity;
+package by.tms.myRkeeper.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,6 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
+@Table(name = "roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,9 +1,9 @@
-package org.example.myrkeeper.service;
+package by.tms.myRkeeper.service;
 
-import org.example.myrkeeper.entity.Role;
-import org.example.myrkeeper.entity.User;
-import org.example.myrkeeper.repository.RoleRepository;
-import org.example.myrkeeper.repository.UserRepository;
+import by.tms.myRkeeper.entity.Role;
+import by.tms.myRkeeper.entity.User;
+import by.tms.myRkeeper.repository.RoleRepository;
+import by.tms.myRkeeper.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

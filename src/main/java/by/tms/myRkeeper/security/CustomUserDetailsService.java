@@ -1,8 +1,8 @@
-package org.example.myrkeeper.security;
+package by.tms.myRkeeper.security;
 
-import org.example.myrkeeper.entity.Role;
-import org.example.myrkeeper.entity.User;
-import org.example.myrkeeper.repository.UserRepository;
+import by.tms.myRkeeper.entity.Role;
+import by.tms.myRkeeper.entity.User;
+import by.tms.myRkeeper.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

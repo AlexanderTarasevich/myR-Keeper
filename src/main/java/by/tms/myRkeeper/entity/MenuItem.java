@@ -1,9 +1,6 @@
-package org.example.myrkeeper.entity;
+package by.tms.myRkeeper.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,6 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @ToString
 @Entity
+@Table(name = "menu_items")
 public class MenuItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

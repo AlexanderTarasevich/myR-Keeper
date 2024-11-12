@@ -1,7 +1,7 @@
-package org.example.myrkeeper.controller;
+package by.tms.myRkeeper.controller;
 
-import org.example.myrkeeper.entity.Order;
-import org.example.myrkeeper.service.OrderService;
+import by.tms.myRkeeper.entity.Order;
+import by.tms.myRkeeper.service.OrderService;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

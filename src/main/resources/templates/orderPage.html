@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Order Management</title>
 </head>
 <body>
-$END$
+<h1>Order Management</h1>
+
+<!-- Общие функции для всех пользователей -->
+<div>
+    <p>List of Orders:</p>
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Comment</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}">1</td>
+            <td th:text="${order.menuItem.name}">Pizza</td>
+            <td th:text="${order.quantity}">2</td>
+            <td th:text="${order.comment}">No cheese</td>
+            <td>
+                <!-- Дополнительные функции только для админов -->
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <form th:action="@{/orders/delete}" method="post">
+                        <input type="hidden" name="orderId" th:value="${order.id}" />
+                        <button type="submit">Delete Order</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

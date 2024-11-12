@@ -1,4 +1,4 @@
-package org.example.myrkeeper.dto;
+package by.tms.myRkeeper.dto;
 
 import lombok.Getter;
 import lombok.Setter;
