@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,16 +32,21 @@ public class OrderService {
         order.setWaiter(waiter);
         order.setOrderTime(LocalDateTime.now());
         order.setOrderItems(orderItems);
+        order.setStatus("OPEN");
         return orderRepository.save(order);
     }
 
-    public OrderItem addItemToOrder(Order order, MenuItem menuItem, String comment, int quantity) {
+    public Order getCurrentOrderForWaiter(User waiter) {
+        return orderRepository.findByWaiterAndStatus(waiter, "OPEN").orElseGet(() -> createOrder(waiter, new ArrayList<>()));
+    }
+
+    public void addItemToOrder(Order order, MenuItem menuItem, String comment, int quantity) {
         OrderItem orderItem = new OrderItem();
         orderItem.setOrder(order);
         orderItem.setMenuItem(menuItem);
         orderItem.setComment(comment);
         orderItem.setQuantity(quantity);
-        return orderItemRepository.save(orderItem);
+        orderItemRepository.save(orderItem);
     }
 
     public List<Order> findAll() {

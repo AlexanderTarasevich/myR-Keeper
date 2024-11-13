@@ -1,38 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity">
 <head>
+    <meta charset="UTF-8">
     <title>Order Management</title>
+    <link rel="stylesheet" type="text/css" href="/css/orderPage.css">
 </head>
 <body>
-<h1>Order Management</h1>
-
-<!-- Общие функции для всех пользователей -->
-<div>
-    <p>List of Orders:</p>
-    <table>
-        <tr>
-            <th>Order ID</th>
-            <th>Item</th>
-            <th>Quantity</th>
-            <th>Comment</th>
-            <th>Actions</th>
-        </tr>
-        <tr th:each="order : ${orders}">
-            <td th:text="${order.id}">1</td>
-            <td th:text="${order.menuItem.name}">Pizza</td>
-            <td th:text="${order.quantity}">2</td>
-            <td th:text="${order.comment}">No cheese</td>
-            <td>
-                <!-- Дополнительные функции только для админов -->
-                <div sec:authorize="hasRole('ROLE_ADMIN')">
-                    <form th:action="@{/orders/delete}" method="post">
+<div class="container">
+    <h1>Order Management</h1>
+    <div class="order-list">
+        <p>List of Orders:</p>
+        <table>
+            <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Waiter</th>
+                <th>Order Time</th>
+                <th>Items</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.waiter.username}"></td>
+                <td th:text="${order.orderTime}"></td>
+                <td>
+                    <ul>
+                        <li th:each="item : ${order.orderItems}">
+                            <span th:text="${item.menuItem.name}"></span> x
+                            <span th:text="${item.quantity}"></span> -
+                            <span th:text="${item.comment}"></span>
+                        </li>
+                    </ul>
+                </td>
+                <td th:text="${order.totalPrice}"></td>
+                <td th:text="${order.status}"></td>
+                <td>
+                    <form th:action="@{/orders/print}" method="post" style="display:inline;">
                         <input type="hidden" name="orderId" th:value="${order.id}" />
-                        <button type="submit">Delete Order</button>
+                        <button type="submit" class="btn">Print</button>
                     </form>
-                </div>
-            </td>
-        </tr>
-    </table>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <form th:action="@{/orders/delete}" method="post" style="display:inline;">
+                            <input type="hidden" name="orderId" th:value="${order.id}" />
+                            <button type="submit" class="btn">Delete Order</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>

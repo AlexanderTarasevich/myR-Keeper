@@ -24,7 +24,7 @@ public class OrderItem {
     private int quantity;
 
     public OrderItem() {
-        this.quantity = 1;
+        this.quantity = 0;
     }
 
 }

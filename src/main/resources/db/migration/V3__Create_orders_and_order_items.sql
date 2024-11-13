@@ -3,6 +3,7 @@ CREATE TABLE orders
     id         BIGSERIAL PRIMARY KEY,
     waiter_id  BIGINT    NOT NULL,
     order_time TIMESTAMP NOT NULL,
+    status VARCHAR(50) NOT NULL,
     FOREIGN KEY (waiter_id) REFERENCES users (id)
 );
 
