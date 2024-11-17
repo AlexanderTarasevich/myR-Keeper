@@ -23,9 +23,21 @@
                             <input type="number" name="quantity" min="0" value="0">
                         </label>
                     </div>
+                    <div class="comment-controls">
+                        <label>
+                            Comment:
+                            <input type="text" name="comments" placeholder="Add a comment">
+                        </label>
+                    </div>
                 </div>
             </li>
         </ul>
+        <div>
+            <label for="tableId">Choose Table:</label>
+            <select name="tableId" id="tableId">
+                <option th:each="table : ${tables}" th:value="${table.id}" th:text="'Table ' + ${table.number}">Table 1</option>
+            </select>
+        </div>
         <button type="submit" class="add-to-order">Add to Order</button>
     </form>
 </div>

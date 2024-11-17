@@ -1,7 +1,9 @@
 package by.tms.myRkeeper.controller;
 
 import by.tms.myRkeeper.entity.MenuItem;
+import by.tms.myRkeeper.entity.Table;
 import by.tms.myRkeeper.repository.MenuItemRepository;
+import by.tms.myRkeeper.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,8 @@ import java.util.List;
 
 @Controller
 public class MenuController {
+    @Autowired
+    private TableRepository tableRepository;
 
     @Autowired
     private MenuItemRepository menuItemRepository;
@@ -36,16 +40,20 @@ public class MenuController {
     @GetMapping("/menu/bar")
     public String showBarMenu(Model model) {
         List<MenuItem> barItems = menuItemRepository.findByCategory("bar");
+        List<Table> tables = tableRepository.findAll();
         model.addAttribute("menuType", "Bar");
         model.addAttribute("menuItems", barItems);
+        model.addAttribute("tables", tables);
         return "menu";
     }
 
     @GetMapping("/menu/kitchen")
     public String showKitchenMenu(Model model) {
         List<MenuItem> kitchenItems = menuItemRepository.findByCategory("kitchen");
+        List<Table> tables = tableRepository.findAll();
         model.addAttribute("menuType", "Kitchen");
         model.addAttribute("menuItems", kitchenItems);
+        model.addAttribute("tables", tables);
         return "menu";
     }
 

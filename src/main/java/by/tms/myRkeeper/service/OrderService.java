@@ -1,52 +1,55 @@
 package by.tms.myRkeeper.service;
 
-import by.tms.myRkeeper.entity.User;
-import by.tms.myRkeeper.entity.MenuItem;
-import by.tms.myRkeeper.entity.Order;
-import by.tms.myRkeeper.entity.OrderItem;
+import by.tms.myRkeeper.entity.*;
 import by.tms.myRkeeper.repository.MenuItemRepository;
 import by.tms.myRkeeper.repository.OrderItemRepository;
 import by.tms.myRkeeper.repository.OrderRepository;
+import by.tms.myRkeeper.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final MenuItemRepository menuItemRepository;
+    private final TableRepository tableRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, MenuItemRepository menuItemRepository) {
+    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository, MenuItemRepository menuItemRepository, TableRepository tableRepository) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.menuItemRepository = menuItemRepository;
+        this.tableRepository = tableRepository;
     }
 
-    public Order createOrder(User waiter, List<OrderItem> orderItems) {
+    public Order createOrder(User waiter, List<OrderItem> orderItems, Table table) {
         Order order = new Order();
         order.setWaiter(waiter);
         order.setOrderTime(LocalDateTime.now());
         order.setOrderItems(orderItems);
         order.setStatus("OPEN");
+        order.setTable(table);
         return orderRepository.save(order);
     }
 
-    public Order getCurrentOrderForWaiter(User waiter) {
-        return orderRepository.findByWaiterAndStatus(waiter, "OPEN").orElseGet(() -> createOrder(waiter, new ArrayList<>()));
+    public List<Order> findOrdersByWaiter(User waiter) {
+        return orderRepository.findByWaiter(waiter);
     }
 
-    public void addItemToOrder(Order order, MenuItem menuItem, String comment, int quantity) {
+    public OrderItem addItemToOrder(Order order, MenuItem menuItem, String comment, int quantity) {
         OrderItem orderItem = new OrderItem();
         orderItem.setOrder(order);
         orderItem.setMenuItem(menuItem);
         orderItem.setComment(comment);
         orderItem.setQuantity(quantity);
-        orderItemRepository.save(orderItem);
+        return orderItemRepository.save(orderItem);
     }
 
     public List<Order> findAll() {
@@ -55,5 +58,13 @@ public class OrderService {
 
     public void deleteById(Long id) {
         orderRepository.deleteById(id);
+    }
+
+    public Optional<Order> findById(Long id) {
+        return orderRepository.findById(id);
+    }
+
+    public Order save(Order order) {
+        return orderRepository.save(order);
     }
 }

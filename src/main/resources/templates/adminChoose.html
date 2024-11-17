@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Choose</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/adminChoose.css">
+</head>
+<body>
+<div class="container">
+    <h1>Admin Choose</h1>
+    <form th:action="@{/admin/choose}" method="post">
+        <button type="submit" name="choice" value="newOrder" class="btn btn-primary">Create New Order</button>
+        <button type="submit" name="choice" value="viewOrders" class="btn btn-secondary">View All Orders</button>
+    </form>
+</div>
+</body>
+</html>

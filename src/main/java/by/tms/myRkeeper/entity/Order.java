@@ -14,7 +14,7 @@ import java.util.List;
 @ToString
 @Setter
 @Getter
-@Table(name = "orders")
+@jakarta.persistence.Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,11 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
+
+    @ManyToOne
+    @JoinColumn(name = "table_id")
+    private Table table;
+
 
     public String getTotalPrice() {
         BigDecimal total = orderItems.stream().map(item -> item.getMenuItem().getPrice().multiply(BigDecimal.valueOf(item.getQuantity()))).reduce(BigDecimal.ZERO, BigDecimal::add);

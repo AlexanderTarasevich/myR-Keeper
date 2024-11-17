@@ -4,13 +4,24 @@
     <meta charset="UTF-8">
     <title>Order Management</title>
     <link rel="stylesheet" type="text/css" href="/css/orderPage.css">
+    <!-- Bootstrap CSS для красивых уведомлений -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
     <h1>Order Management</h1>
-    <div class="order-list">
+
+    <!-- Уведомление -->
+    <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${message}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="order-list" th:if="${orders}">
         <p>List of Orders:</p>
-        <table>
+        <table class="table table-striped">
             <thead>
             <tr>
                 <th>Order ID</th>
@@ -19,6 +30,7 @@
                 <th>Items</th>
                 <th>Total Price</th>
                 <th>Status</th>
+                <th>Table</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -38,15 +50,24 @@
                 </td>
                 <td th:text="${order.totalPrice}"></td>
                 <td th:text="${order.status}"></td>
+                <td th:text="'Table ' + ${order.table.number}"></td>
                 <td>
-                    <form th:action="@{/orders/print}" method="post" style="display:inline;">
+                    <form th:action="@{/orders/print}" method="post" style="display:inline;" th:if="${order.status != 'CLOSED'}">
                         <input type="hidden" name="orderId" th:value="${order.id}" />
-                        <button type="submit" class="btn">Print</button>
+                        <button type="submit" class="btn btn-primary">Print</button>
                     </form>
-                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <form th:action="@{/orders/addItems}" method="get" style="display:inline;" th:if="${order.status != 'CLOSED'}">
+                        <input type="hidden" name="orderId" th:value="${order.id}" />
+                        <button type="submit" class="btn btn-secondary">Add Items</button>
+                    </form>
+                    <form th:action="@{/orders/close}" method="post" style="display:inline;" th:if="${order.status != 'CLOSED'}">
+                        <input type="hidden" name="orderId" th:value="${order.id}" />
+                        <button type="submit" class="btn btn-warning">Close Order</button>
+                    </form>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')" th:if="${order.status == 'CLOSED'}">
                         <form th:action="@{/orders/delete}" method="post" style="display:inline;">
                             <input type="hidden" name="orderId" th:value="${order.id}" />
-                            <button type="submit" class="btn">Delete Order</button>
+                            <button type="submit" class="btn btn-danger">Delete Order</button>
                         </form>
                     </div>
                 </td>
@@ -54,6 +75,22 @@
             </tbody>
         </table>
     </div>
+
+    <div th:if="${orders.isEmpty()}">
+        <div class="alert alert-info">
+            <strong>No current orders.</strong>
+            <a href="/choose" class="btn btn-primary">Create New Order</a>
+        </div>
+    </div>
+
+    <div th:if="${hasClosedOrders}" class="mt-3">
+        <a href="/choose" class="btn btn-primary">Create New Order</a>
+    </div>
 </div>
+
+<!-- Bootstrap JS для закрытия уведомлений -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

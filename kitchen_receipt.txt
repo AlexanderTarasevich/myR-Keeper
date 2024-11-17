@@ -1,0 +1,7 @@
+Order ID: 8
+Waiter: катя
+Order Time: 2024-11-17T22:49:52.541969
+Items:
+Spaghetti Carbonara x 3 - 
+Total Price: 37.50
+Status: OPEN

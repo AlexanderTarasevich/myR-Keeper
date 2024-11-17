@@ -1,0 +1,22 @@
+.menu-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.menu-item {
+    flex: 1 1 calc(33.333% - 1rem);
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item h5 {
+    margin-top: 0;
+}
+
+.quantity-controls,
+.comment-controls {
+    margin-top: 0.5rem;
+}

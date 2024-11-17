@@ -3,21 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Choose Menu</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/choose.css">
 </head>
 <body>
 <div class="container">
-    <div class="form-wrapper">
-        <h1>Choose Menu</h1>
-        <form th:action="@{/choose}" method="post">
-            <div class="form-group">
-                <button type="submit" name="choice" value="bar" class="btn">Bar</button>
-            </div>
-            <div class="form-group">
-                <button type="submit" name="choice" value="kitchen" class="btn">Kitchen</button>
-            </div>
-        </form>
+    <h1>Choose Menu</h1>
+    <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${message}"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
+    <form th:action="@{/choose}" method="post">
+        <div>
+            <button type="submit" name="choice" value="bar" class="btn btn-primary">Bar</button>
+        </div>
+        <div>
+            <button type="submit" name="choice" value="kitchen" class="btn btn-primary">Kitchen</button>
+        </div>
+    </form>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

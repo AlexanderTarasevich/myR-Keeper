@@ -1,11 +1,15 @@
 package by.tms.myRkeeper.controller;
 
 import by.tms.myRkeeper.dto.RoleForm;
+import by.tms.myRkeeper.entity.Order;
 import by.tms.myRkeeper.entity.Role;
 import by.tms.myRkeeper.entity.User;
 import by.tms.myRkeeper.repository.RoleRepository;
 import by.tms.myRkeeper.repository.UserRepository;
+import by.tms.myRkeeper.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +18,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Controller
 public class AuthController {
-
+    @Autowired
+    private OrderService orderService;
     @Autowired
     private UserRepository userRepository;
 
@@ -49,7 +55,7 @@ public class AuthController {
             if (existingRole != null) {
                 userRoles.add(existingRole);
             } else { // Создать и сохранить новую роль, если она не существует
-            Role newRole = new Role();
+                Role newRole = new Role();
                 newRole.setName(roleForm.getRoleName());
                 roleRepository.save(newRole);
                 userRoles.add(newRole);
@@ -59,5 +65,13 @@ public class AuthController {
         userRepository.save(user);
         return "redirect:/login";
     }
-}
 
+    @PostMapping("/login-success")
+    public String handleLoginSuccess(Authentication authentication, Model model) {
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+        User user = userRepository.findByUsername(principal.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        List<Order> orders = orderService.findOrdersByWaiter(user);
+        model.addAttribute("orders", orders);
+        return "orderPage";
+    }
+}

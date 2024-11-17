@@ -26,14 +26,14 @@ public class SecurityConfig {
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/register", "/login", "/css/**", "/images/**", "/js/**", "/static/**").permitAll()
-                                .requestMatchers("/choose", "/menu/**").authenticated()
+                                .requestMatchers("/choose", "/menu/**","/orders/**").authenticated()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->
                         formLogin
                                 .loginPage("/login")
-                                .defaultSuccessUrl("/choose",true)
+                                .defaultSuccessUrl("/default",true)
                                 .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll

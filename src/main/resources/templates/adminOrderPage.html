@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Order Management</title>
+    <link rel="stylesheet" type="text/css" href="/css/orderPage.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Admin Order Management</h1>
+
+    <div class="order-list">
+        <p>List of Orders:</p>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Waiter</th>
+                <th>Order Time</th>
+                <th>Items</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Table</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.waiter.username}"></td>
+                <td th:text="${order.orderTime}"></td>
+                <td>
+                    <ul>
+                        <li th:each="item : ${order.orderItems}">
+                            <span th:text="${item.menuItem.name}"></span> x
+                            <span th:text="${item.quantity}"></span> -
+                            <span th:text="${item.comment}"></span>
+                        </li>
+                    </ul>
+                </td>
+                <td th:text="${order.totalPrice}"></td>
+                <td th:text="${order.status}"></td>
+                <td th:text="'Table ' + ${order.table.number}"></td>
+                <td>
+                    <form th:action="@{/admin/deleteOrder}" method="post" style="display:inline;">
+                        <input type="hidden" name="orderId" th:value="${order.id}" />
+                        <button type="submit" class="btn btn-danger">Delete Order</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
