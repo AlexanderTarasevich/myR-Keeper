@@ -8,6 +8,7 @@ import lombok.ToString;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,7 +29,7 @@ public class Order {
     private Integer discount;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems;
+    private List<OrderItem> orderItems= new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "table_id")

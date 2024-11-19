@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,6 +50,9 @@ public class AuthController {
     @PostMapping("/register")
     public String registerUser(@ModelAttribute User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getRoleForms() == null) {
+            user.setRoleForms(new ArrayList<>());
+        }
         Set<Role> userRoles = new HashSet<>();
         for (RoleForm roleForm : user.getRoleForms()) {
             Role existingRole = roleRepository.findByName(roleForm.getRoleName()).orElse(null);
