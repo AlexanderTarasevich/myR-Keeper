@@ -67,4 +67,10 @@ public class OrderService {
     public Order save(Order order) {
         return orderRepository.save(order);
     }
+
+    public void setDiscount(Long orderId, int discount) {
+        Order order = findById(orderId).orElseThrow(() -> new IllegalArgumentException("Invalid order ID: " + orderId));
+        order.setDiscount(discount);
+        save(order);
+    }
 }

@@ -20,6 +20,8 @@
                 <th>Order Time</th>
                 <th>Items</th>
                 <th>Total Price</th>
+                <th>Discount</th>
+                <th>Price with Discount</th>
                 <th>Status</th>
                 <th>Table</th>
                 <th>Actions</th>
@@ -39,11 +41,28 @@
                         </li>
                     </ul>
                 </td>
-                <td th:text="${order.totalPrice}"></td>
+                <td th:text="${order.getTotalPrice()}"></td>
+                <td th:text="${order.discount != null ? order.discount + '%' : 'No Discount'}"></td>
+                <td th:text="${order.discount != null ? order.getDiscountedTotal() : ''}"></td>
                 <td th:text="${order.status}"></td>
                 <td th:text="'Table ' + ${order.table.number}"></td>
                 <td>
-                    <form th:action="@{/admin/deleteOrder}" method="post" style="display:inline;">
+                    <form th:action="@{/admin/close}" method="post" style="display:inline;" th:if="${order.status != 'CLOSED'}">
+                        <input type="hidden" name="orderId" th:value="${order.id}" />
+                        <button type="submit" class="btn btn-warning">Close Order</button>
+                    </form>
+                    <form th:action="@{/admin/setDiscount}" method="post" style="display:inline;" th:if="${order.status != 'CLOSED'}">
+                        <input type="hidden" name="orderId" th:value="${order.id}" />
+                        <div class="input-group">
+                            <select name="discount" class="form-control">
+                                <option value="10">10%</option>
+                                <option value="20">20%</option>
+                                <option value="50">50%</option>
+                            </select>
+                            <button type="submit" class="btn btn-info">Set Discount</button>
+                        </div>
+                    </form>
+                    <form th:action="@{/admin/deleteOrder}" method="post" style="display:inline;" th:if="${order.status == 'CLOSED'}">
                         <input type="hidden" name="orderId" th:value="${order.id}" />
                         <button type="submit" class="btn btn-danger">Delete Order</button>
                     </form>

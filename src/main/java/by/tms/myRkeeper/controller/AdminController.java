@@ -1,6 +1,7 @@
 package by.tms.myRkeeper.controller;
 
 import by.tms.myRkeeper.entity.Order;
+import by.tms.myRkeeper.entity.OrderItem;
 import by.tms.myRkeeper.repository.MenuItemRepository;
 import by.tms.myRkeeper.repository.TableRepository;
 import by.tms.myRkeeper.repository.UserRepository;
@@ -12,7 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 @Controller
@@ -60,4 +68,47 @@ public class AdminController {
         orderService.deleteById(orderId);
         return "redirect:/admin/orders";
     }
+
+    @PostMapping("/setDiscount")
+    public String setDiscount(@RequestParam Long orderId, @RequestParam int discount) {
+        orderService.setDiscount(orderId, discount);
+        return "redirect:/admin/orders";
+    }
+
+
+    @PostMapping("/close")
+    public String closeOrder(@RequestParam Long orderId, RedirectAttributes redirectAttributes) {
+        Order order = orderService.findById(orderId).orElseThrow(() -> new IllegalArgumentException("Invalid order ID: " + orderId));
+        String receiptContent = generateReceiptContent(order);
+        try {
+            Path path = Paths.get("customer_receipt.txt");
+            Files.write(path, receiptContent.getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException("Error writing receipt file", e);
+        }
+        order.setStatus("CLOSED");
+        order.getTable().setStatus("AVAILABLE");
+        orderService.save(order);
+        redirectAttributes.addFlashAttribute("message", "Чек для гостя напечатан и заказ закрыт");
+        return "redirect:/admin/orders";
+    }
+
+    private String generateReceiptContent(Order order) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Order ID: ").append(order.getId()).append("\n");
+        sb.append("Waiter: ").append(order.getWaiter().getUsername()).append("\n");
+        sb.append("Order Time: ").append(order.getOrderTime()).append("\n");
+        sb.append("Items:\n");
+        for (OrderItem item : order.getOrderItems()) {
+            sb.append(item.getMenuItem().getName()).append(" x ").append(item.getQuantity()).append(" - ").append(item.getComment()).append("\n");
+        }
+        sb.append("Total Price: ").append(order.getTotalPrice()).append("\n");
+        if (order.getDiscount() != null && order.getDiscount() > 0) {
+            sb.append("Discount: ").append(order.getDiscount()).append("%\n");
+            sb.append("Price with Discount: ").append(order.getDiscountedTotal()).append("\n");
+        }
+        sb.append("Status: ").append(order.getStatus()).append("\n");
+        return sb.toString();
+    }
+
 }

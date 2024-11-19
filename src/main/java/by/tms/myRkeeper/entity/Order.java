@@ -25,6 +25,7 @@ public class Order {
 
     private LocalDateTime orderTime;
     private String status;
+    private Integer discount;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
@@ -34,8 +35,21 @@ public class Order {
     private Table table;
 
 
-    public String getTotalPrice() {
-        BigDecimal total = orderItems.stream().map(item -> item.getMenuItem().getPrice().multiply(BigDecimal.valueOf(item.getQuantity()))).reduce(BigDecimal.ZERO, BigDecimal::add);
-        return total.setScale(2, RoundingMode.HALF_UP).toString();
+    public BigDecimal getTotalPrice() {
+        BigDecimal total = BigDecimal.ZERO;
+        for (OrderItem item : orderItems) {
+            total = total.add(item.getMenuItem().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
+        }
+        return total;
+    }
+
+
+    public BigDecimal getDiscountedTotal() {
+        BigDecimal total = getTotalPrice();
+        if (discount != null && discount > 0) {
+            BigDecimal discountAmount = total.multiply(BigDecimal.valueOf(discount)).divide(BigDecimal.valueOf(100));
+            return total.subtract(discountAmount);
+        }
+        return total;
     }
 }
