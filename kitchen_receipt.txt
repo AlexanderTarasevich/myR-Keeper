@@ -1,7 +1,8 @@
 Order ID: 8
-Waiter: катя
-Order Time: 2024-11-17T22:49:52.541969
+Waiter: саша
+Order Time: 2024-11-19T23:39:45.336793
 Items:
-Spaghetti Carbonara x 3 - 
-Total Price: 37.50
-Status: OPEN
+Old Fashioned x 2 - 
+Gin Tonic x 10 - 
+Total Price: 93.00
+Status: PRINTED
