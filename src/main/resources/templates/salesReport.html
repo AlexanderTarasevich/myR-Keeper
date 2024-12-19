@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sales Report</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/adminChoose.css">
+</head>
+<body>
+<div class="container">
+    <h1>Sales Report</h1>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Waiter</th>
+            <th>Total Sales</th>
+            <th>Orders Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="report : ${salesReports}">
+            <td th:text="${report.waiterName}">Waiter Name</td>
+            <td th:text="${report.totalSales}">Total Sales</td>
+            <td th:text="${report.ordersCount}">Orders Count</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

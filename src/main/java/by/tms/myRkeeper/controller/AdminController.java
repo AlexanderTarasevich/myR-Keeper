@@ -1,5 +1,6 @@
 package by.tms.myRkeeper.controller;
 
+import by.tms.myRkeeper.dto.SalesReport;
 import by.tms.myRkeeper.entity.Order;
 import by.tms.myRkeeper.entity.OrderItem;
 import by.tms.myRkeeper.repository.MenuItemRepository;
@@ -51,9 +52,18 @@ public class AdminController {
             return "redirect:/choose";
         } else if ("viewOrders".equals(choice)) {
             return "redirect:/admin/orders";
+        } else if ("salesReport".equals(choice)) {
+            return "redirect:/admin/salesReport";
         } else {
             return "redirect:/admin/choose";
         }
+    }
+
+    @GetMapping("/salesReport")
+    public String showSalesReport(Model model) {
+        List<SalesReport> salesReports = orderService.getSalesReport();
+        model.addAttribute("salesReports", salesReports);
+        return "salesReport";
     }
 
     @GetMapping("/orders")

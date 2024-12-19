@@ -1,8 +1,7 @@
-Order ID: 12
+Order ID: 15
 Waiter: саша
-Order Time: 2024-11-20T00:11:47.295447
+Order Time: 2024-12-19T14:54:59.519731
 Items:
-Mojito x 1 - без лайма
-Spaghetti Carbonara x 10 - без яйца
-Total Price: 133.00
+Old Fashioned x 3 - 
+Total Price: 27.00
 Status: OPEN

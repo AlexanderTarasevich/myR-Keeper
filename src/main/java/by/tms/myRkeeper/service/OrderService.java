@@ -1,5 +1,6 @@
 package by.tms.myRkeeper.service;
 
+import by.tms.myRkeeper.dto.SalesReport;
 import by.tms.myRkeeper.entity.*;
 import by.tms.myRkeeper.repository.MenuItemRepository;
 import by.tms.myRkeeper.repository.OrderItemRepository;
@@ -66,6 +67,10 @@ public class OrderService {
 
     public Order save(Order order) {
         return orderRepository.save(order);
+    }
+
+    public List<SalesReport> getSalesReport() {
+        return orderRepository.findSalesReport();
     }
 
     public void setDiscount(Long orderId, int discount) {

@@ -27,9 +27,10 @@ public class Order {
     private LocalDateTime orderTime;
     private String status;
     private Integer discount;
+    private BigDecimal totalPrice;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems= new ArrayList<>();
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "table_id")
@@ -42,6 +43,16 @@ public class Order {
             total = total.add(item.getMenuItem().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
         }
         return total;
+    }
+
+    @PrePersist
+    @PreUpdate
+    public void calculateTotalPrice() {
+        BigDecimal total = BigDecimal.ZERO;
+        for (OrderItem item : orderItems) {
+            total = total.add(item.getMenuItem().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
+        }
+        this.totalPrice = total;
     }
 
 
